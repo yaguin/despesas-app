@@ -31,6 +31,16 @@ class Expense extends Model
     ];
 
     /**
+     * User relashionship.
+     *
+     * @return object
+     */
+    public function descriptions()
+    {
+        return $this->hasOne(User::class, 'id_usuario', 'id');
+    }
+
+    /**
      * The "booted" method of the model.
      */
     protected static function booted(): void

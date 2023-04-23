@@ -7,6 +7,7 @@ use App\Http\Resources\ExpenseResource;
 use App\Models\Expense;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
+use App\Notifications\RegisteredExpense;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +39,7 @@ class ExpenseController extends Controller
             $expense->id_usuario = $request->user()->id;
             $expense->save();
 
-            //@TODO enviar notificação de cadastro
+            auth()->user()->notify(new RegisteredExpense());
             DB::commit();
             return response()->json([
                 'data' => $expense,
