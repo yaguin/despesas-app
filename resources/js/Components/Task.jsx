@@ -34,7 +34,7 @@ export default function Task({ task }) {
                     <div>
                         <span className="text-gray-800">{task.user.name}</span>
                         <small className="ml-2 text-sm text-gray-600">{dayjs(task.created_at).fromNow()}</small>
-                        <small> &middot; {task.concluded ? 'Concluido' : 'Pendente'}</small>
+                        <small> &middot; {task.concluded ? 'Concluded' : 'Pending'}</small>
                         { task.created_at !== task.updated_at && <small className="text-sm text-gray-600"> &middot; edited</small>}
                     </div>
                     {task.user.id === auth.user.id &&
