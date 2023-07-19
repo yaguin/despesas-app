@@ -13,6 +13,7 @@ class Task extends Model
 
     protected $fillable = [
         'message',
+        'concluded'
     ];
 
     protected $dispatchesEvents = [

@@ -68,6 +68,7 @@ class TaskController extends Controller
 
         $validated = $request->validate([
             'message' => 'required|string|max:255',
+            'concluded' => 'required|boolean',
         ]);
 
         $task->update($validated);

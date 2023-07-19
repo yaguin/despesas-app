@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Switch from '@mui/material/Switch';
 import Dropdown from '@/Components/Dropdown';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -15,6 +16,7 @@ export default function Task({ task }) {
 
     const { data, setData, patch, clearErrors, reset, errors } = useForm({
         message: task.message,
+        concluded: task.concluded,
     });
 
     const submit = (e) => {
@@ -32,6 +34,7 @@ export default function Task({ task }) {
                     <div>
                         <span className="text-gray-800">{task.user.name}</span>
                         <small className="ml-2 text-sm text-gray-600">{dayjs(task.created_at).fromNow()}</small>
+                        <small> &middot; {task.concluded ? 'Concluido' : 'Pendente'}</small>
                         { task.created_at !== task.updated_at && <small className="text-sm text-gray-600"> &middot; edited</small>}
                     </div>
                     {task.user.id === auth.user.id &&
@@ -58,6 +61,11 @@ export default function Task({ task }) {
                     ? <form onSubmit={submit}>
                         <textarea value={data.message} onChange={e => setData('message', e.target.value)} className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
                         <InputError message={errors.message} className="mt-2" />
+                        <Switch
+                            checked={data.concluded}
+                            onChange={e => setData('concluded', e.target.checked)}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                        />
                         <div className="space-x-2">
                             <PrimaryButton className="mt-4">Save</PrimaryButton>
                             <button className="mt-4" onClick={() => { setEditing(false); reset(); clearErrors(); }}>Cancel</button>
